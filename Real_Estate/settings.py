@@ -22,11 +22,12 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'django-insecure-4$@m^1z#k8&*t@q-3&6u9%g!v7w@p1)0x^c4sz1&8^+h9w@zxl'
 
-DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = [os.getenv('LOCAL_HOST')]
+DEBUG = True
+
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -34,6 +35,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.admin',
     'crispy_forms',
+    'crispy_bootstrap4',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -50,6 +52,9 @@ INSTALLED_APPS = [
     'pages',
     'contacts',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

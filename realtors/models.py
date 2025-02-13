@@ -2,7 +2,6 @@ from django.db import models
 from django.core.files.storage import default_storage as storage
 from datetime import datetime
 from PIL import Image
-# Create your models here.
 
 class Realtor(models.Model):
     name = models.CharField(max_length=200)
@@ -20,12 +19,13 @@ class Realtor(models.Model):
         if not self.name and self.description:
             return
 
-        super(Realtor, self).save()
+        super(Realtor, self).save(*args, **kwargs)  # ✅ Call parent save correctly
+
         if self.image:
-            size = 200, 200
+            size = (200, 200)
             image = Image.open(self.image)
-            image.thumbnail(size, Image.ANTIALIAS)
-            fh = storage.open(self.image.name, "w")
-            format = 'png'
-            image.save(fh, format)
-            fh.close()
+            image = image.resize(size, Image.LANCZOS)  # ✅ Resize the image
+
+            # ✅ Open file in binary write mode ("wb") to fix the error
+            with storage.open(self.image.name, "wb") as fh:
+                image.save(fh, format="PNG")  # ✅ Correctly save the image as PNG
